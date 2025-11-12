@@ -24,7 +24,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres
+                  name: postgresql-secret
                   key: postgres
             - name: POSTGRES_DB
               value: strapi
