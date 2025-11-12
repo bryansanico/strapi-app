@@ -42,4 +42,4 @@ spec:
     - protocol: TCP
       port: 5432
   type: ClusterIP
-Step 2: Create PostgreSQL Credentials (Secret)
+#Step 2: Create PostgreSQL Credentials (Secret)
