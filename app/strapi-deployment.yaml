@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strapi-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi
+  template:
+    metadata:
+      labels:
+        app: strapi
+    spec:
+      containers:
+        - name: strapi
+          image: strapi/strapi:latest  # Replace with your custom image if needed
+          ports:
+            - containerPort: 1337
+          env:
+            - name: DATABASE_CLIENT
+              value: "postgres"  # Use PostgreSQL as the DB client
+            - name: DATABASE_HOST
+              value: "postgresql-service"  # Name of the PostgreSQL service
+            - name: DATABASE_PORT
+              value: "5432"  # Default PostgreSQL port
+            - name: DATABASE_NAME
+              value: "strapi"  # Database name
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secret
+                  key: postgres-user
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql-secret
+                  key: postgres-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: strapi-service
+spec:
+  selector:
+    app: strapi
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 1337
+  type: ClusterIP
