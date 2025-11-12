@@ -14,18 +14,18 @@ spec:
     spec:
       containers:
         - name: strapi
-          image: strapi/strapi:latest  # Replace with your custom image if needed
+          image: strapi/strapi:latest
           ports:
             - containerPort: 1337
           env:
             - name: DATABASE_CLIENT
-              value: "postgres"  # Use PostgreSQL as the DB client
+              value: "postgres"
             - name: DATABASE_HOST
-              value: "postgresql-service"  # Name of the PostgreSQL service
+              value: "postgresql-service"
             - name: DATABASE_PORT
-              value: "5432"  # Default PostgreSQL port
+              value: "5432"
             - name: DATABASE_NAME
-              value: "strapi"  # Database name
+              value: "strapi"
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -46,6 +46,5 @@ spec:
     app: strapi
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 1337
+      port: 1337
   type: ClusterIP
